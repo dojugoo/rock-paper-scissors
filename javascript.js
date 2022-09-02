@@ -2,6 +2,8 @@
 //Define constants, stores results from RPS game
 let logic;
 let outcomeMessage;
+let playerSelection;
+let compC;
 
 //Event listener for button presses
 const rock = document.querySelector("#rockbtn");
@@ -11,9 +13,15 @@ rock.addEventListener("click", playGame);
 paper.addEventListener("click", playGame);
 scissors.addEventListener("click", playGame);
 
-//Plays game given button press
+//Updating html to display results
+const results = document.createElement("div");
+const compOpt = document.createElement("p");
+const winner = document.createElement("p");
+const place = document.querySelector(".container");
+
+
+//Plays game given button press and outputs results
 function playGame(e) {
-    let playerSelection; //stores playerselection depending on what button pressed
     if (e.target.id === "rockbtn") {
         playerSelection = "Rock";
     } else if (e.target.id === "paperbtn") {
@@ -23,10 +31,13 @@ function playGame(e) {
     }
     const compC = getComputerChoice();
 
-    console.log("Player choice is " + playerSelection);
-    console.log("Computer choice is " + compC);
     playRound(playerSelection, compC);
-    console.log(outcomeMessage);
+
+    compOpt.textContent = "You chose " + playerSelection + ", and the computer chose " + compC; 
+    winner.textContent = outcomeMessage;
+    results.appendChild(compOpt);
+    results.appendChild(winner);
+    place.appendChild(results);
 }
 
 
