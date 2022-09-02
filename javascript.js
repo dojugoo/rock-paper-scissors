@@ -1,4 +1,34 @@
 
+//Define constants, stores results from RPS game
+let logic;
+let outcomeMessage;
+
+//Event listener for button presses
+const rock = document.querySelector("#rockbtn");
+const paper = document.querySelector("#paperbtn");
+const scissors = document.querySelector("#scissorsbtn");
+rock.addEventListener("click", playGame);
+paper.addEventListener("click", playGame);
+scissors.addEventListener("click", playGame);
+
+//Plays game given button press
+function playGame(e) {
+    let playerSelection; //stores playerselection depending on what button pressed
+    if (e.target.id === "rockbtn") {
+        playerSelection = "Rock";
+    } else if (e.target.id === "paperbtn") {
+        playerSelection = "Paper";
+    } else if (e.target.id === "scissorsbtn") {
+        playerSelection = "Scissors";
+    }
+    const compC = getComputerChoice();
+
+    console.log("Player choice is " + playerSelection);
+    console.log("Computer choice is " + compC);
+    playRound(playerSelection, compC);
+    console.log(outcomeMessage);
+}
+
 
 //Random computer choice return rock, paper, or scissors
 function getComputerChoice() {
@@ -6,45 +36,40 @@ function getComputerChoice() {
     return choice[Math.floor(Math.random()*choice.length)];
 }
 
-/* Game Logic, return 0 for Loss, 1 for Win, 2 for Tie */
+/* Game Logic, stores result with logic and outcomeMessage variables */
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
-        return 2;
+        logic = 2;
+        outcomeMessage = "It's a tie!";
     }   else if (playerSelection === "Rock") {
         if (computerSelection === "Scissors") {
-            return 1;
+            logic = 1;
+            outcomeMessage = "You win! " + playerSelection + " beats " + computerSelection;
         } else {
-            return 0;
+            logic = 0;
+            outcomeMessage = "You lose! " + computerSelection + " beats " + playerSelection;
         }
     }   else if (playerSelection === 'Paper') {
         if (computerSelection === 'Rock') {
-            return 1;
+            logic = 1;
+            outcomeMessage = "You win! " + playerSelection + " beats " + computerSelection;
         } else {
-            return 0;
+            logic = 0;
+            outcomeMessage = "You lose! " + computerSelection + " beats " + playerSelection;
         }
     }   else if (playerSelection === 'Scissors') {
         if (computerSelection === 'Paper') {
-            return 1;
+            logic = 1;
+            outcomeMessage = "You win! " + playerSelection + " beats " + computerSelection;
         } else {
-            return 0;
+            logic = 0;
+            outcomeMessage = "You lose! " + computerSelection + " beats " + playerSelection;
         }
     }
 }
 
-//Returns win/lose/tie message from game outcome
-function getOutcome(playerSelection, computerSelection) {
-    const log = playRound(playerSelection, computerSelection);
-    if (log === 0) {
-        return "You lose! " + computerSelection + " beats " + playerSelection;
-    } else if (log === 1) {
-        return "You win! " + playerSelection + " beats " + computerSelection;
-    } else {
-        return "It's a tie!";
-    }
 
-}
-
-//Working game with 5 rounds and prints out score at end
+/* 5 rounds
 function game() {
     let playerScore = 0;
     let computerScore = 0;
@@ -65,9 +90,6 @@ function game() {
     console.log("Your score is " + playerScore);
     console.log("Computer's score is " + computerScore);
 }
-
-
-
-console.log(game());
+*/
 
 
