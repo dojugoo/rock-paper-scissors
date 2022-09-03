@@ -4,6 +4,9 @@ let logic;
 let outcomeMessage;
 let playerSelection;
 let compC;
+let playerscore = 0;
+let computerscore = 0;
+let reset;
 
 //Event listener for button presses
 const rock = document.querySelector("#rockbtn");
@@ -17,11 +20,18 @@ scissors.addEventListener("click", playGame);
 const results = document.createElement("div");
 const compOpt = document.createElement("p");
 const winner = document.createElement("p");
+const currentscore = document.createElement("p");
+const finalwinner = document.createElement("p");
 const place = document.querySelector(".container");
 
 
 //Plays game given button press and outputs results
 function playGame(e) {
+    if (reset === 1) {
+        results.removeChild(finalwinner);
+        reset = 0;
+    }
+
     if (e.target.id === "rockbtn") {
         playerSelection = "Rock";
     } else if (e.target.id === "paperbtn") {
@@ -32,12 +42,34 @@ function playGame(e) {
     const compC = getComputerChoice();
 
     playRound(playerSelection, compC);
+   
+    if (logic == 0) {
+        computerscore += 1;
+    } else if (logic == 1) {
+        playerscore += 1;
+    }
 
     compOpt.textContent = "You chose " + playerSelection + ", and the computer chose " + compC; 
     winner.textContent = outcomeMessage;
+    currentscore.textContent = "Player " + playerscore + " - " + computerscore + " Computer";
     results.appendChild(compOpt);
     results.appendChild(winner);
+    results.appendChild(currentscore);
+
+    if (playerscore + computerscore === 5) {
+        if (playerscore > computerscore) {
+            finalwinner.textContent = "YOU WIN THE GAME!";
+        } else {
+            finalwinner.textContent = "YOU LOST! TRY AGAIN!";
+        }
+        playerscore = 0;
+        computerscore = 0;
+        results.appendChild(finalwinner);
+        reset = 1;
+    }
+
     place.appendChild(results);
+
 }
 
 
@@ -78,29 +110,3 @@ function playRound(playerSelection, computerSelection) {
         }
     }
 }
-
-
-/* 5 rounds
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Choice");
-        let computerSelection = getComputerChoice();
-        let play = playRound(playerSelection, computerSelection);
-        if (play === 0) {
-            computerScore += 1;
-            console.log(getOutcome(playerSelection, computerSelection));
-        } else if (play === 1) {
-            playerScore += 1;
-            console.log(getOutcome(playerSelection, computerSelection));
-        } else {
-            console.log(getOutcome(playerSelection, computerSelection));
-        }
-    }
-    console.log("Your score is " + playerScore);
-    console.log("Computer's score is " + computerScore);
-}
-*/
-
-
